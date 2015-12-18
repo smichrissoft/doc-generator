@@ -1,0 +1,488 @@
+@import "http://webfonts.ru/import/ubuntu.css";
+/*
+	Ubuntu, 300, 300 italic, 400, 400 italic, 500, 500 italic, 700, 700 italic
+*/
+
+*{
+	font-size: 1.03em;
+	font-family: Ubuntu;
+}
+
+body{
+	background-image: url("../pictures/bg.png");
+}
+
+.wrapper{
+	width: 98%;
+	margin: 0 auto;
+}
+
+a.text-link{
+	color: #FF3A00;
+	text-decoration: none;
+	transition: 0.2s;
+	text-transform: uppercase;
+}
+
+a.text-link:hover{
+	color: #7F82E8;
+	text-decoration: none;
+}
+
+header{
+	height: auto;
+}
+
+select:hover, input:hover{
+	cursor: pointer;
+}
+
+input:active{
+	cursor:text;
+}
+
+/*Стили для шапки сайта---Начало*/
+.help-and-contact-container{
+	height: auto;
+}
+
+.help-container, .contact-container{
+	margin-top: 40px;
+	background: #C0FFFA;
+	border-radius: 30px;
+	border: 1px solid black;
+}
+
+.help-container:hover, .contact-container:hover{
+	background: #7FFFD0;
+	cursor: pointer;
+
+}
+
+.logo-container{
+	height: auto;
+}
+
+.logo-container img{
+	width: 100%;
+	height: auto;
+	max-height: 250px;
+	border-radius: 10px;
+	border: 1px solid black;
+}
+
+.header-autorize-container, .header-user-info-container{
+	margin-top: 10px;
+	margin-left: 3%;
+	height: auto;
+	max-height: 230px;
+	border-radius: 10px;
+	border: 1px solid black;
+	padding-bottom: 10px;
+	padding-right: 40px;
+	padding-left: 5px;
+	box-shadow:-1px 1px 10px rgba(0, 0, 0, 1.5);
+	transition:box-shadow 0.2s ease; 
+	background: #EEE;
+	display: none;
+}
+
+.header-autorize-container:hover, .header-user-info-container:hover{
+	box-shadow:0 0 transparent, inset 0 0 5px rgba(88, 88, 88, 0.9);
+}
+
+
+.header-user-info-container{
+	border: 1px solid black;
+	padding-right: 5px;
+	min-height: 230px;
+	text-transform: capitalize;
+	display: none;
+}
+
+.header-login-container{
+	margin-top: 10px;
+}
+
+.label-container{
+	height: auto;
+}
+
+.login-label *{
+	padding-top: 10px;
+}
+
+.login-input *{
+	margin-top: 10px;
+}
+
+.password-label *{
+	padding-top: 10px;
+}
+
+.password-input *{
+	margin-top: 5px;
+}
+
+.input-container{
+	height: auto;
+}
+
+.submit-container .submit-button{
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+
+.forgot-password-container{
+	height: 10%;
+	padding-top: 15px;
+	bottom: 10px;
+}
+
+.forgot-container{
+	height: auto;
+	
+}
+
+input.autorize-login, input.autorize-password{
+	font-size: 1.0em;
+}
+
+/*Стили для шапки сайта --- конец*/
+
+.container{
+	margin-top: 40px;
+}
+
+.warning-container{
+	margin-top: 20px;
+	padding-top: 20px;
+	font-size: 1.1em;
+	border-radius: 10px;
+	height: 70px;
+	display: none;
+}
+
+/*Стили для страницы с просмотром шаблонов---Начало*/
+.template-box-container{
+	height: auto;
+	max-height: 350px;
+	background: #888;
+	border: 1px solid black;
+	border-radius: 10px;
+	transition: 0.3s;
+	overflow: hidden;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.template-box-container:hover{
+	cursor: pointer;
+	background: #E4FF2E;
+}
+
+.doc-gen-block{
+	width: 100%;
+}
+
+.template-preview-container{
+	height: auto;
+	background: #999;
+}
+
+.template-info-container{
+	height: auto;
+	padding: 20px 15px 40px 15px;
+	border-radius: 20px;
+	border: 1px solid black;
+	background:#FFFDEE;
+	display: none;
+}
+
+.template-info-title-container{
+	padding-bottom: 20px;
+
+}
+
+.template-download-and-data{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.template-info-data-container{
+	border-radius: 10px;
+	padding-top: 10px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+}
+
+.template-info-download-container a{
+	margin-top: 8%;
+	height: 50px;
+	padding-top: 10px;
+	font-size: 1.3em;
+}
+
+.main-content-container{
+	margin-top: 30px;
+	max-height: 700px;
+	overflow: auto;
+}
+
+.template-id{
+	display: none;
+}
+.main-content-container pre{
+	white-space: pre-wrap;
+}
+
+.template-info-nav{
+	margin-top: 10px;
+}
+
+.call-lawyer-container *{
+	margin-top: 50px;
+	min-height: 50px; 
+	font-size: 1.3em;
+}
+
+button.show-template{
+	margin-top: 40px;
+}
+
+.template-content{
+	min-height: 300px;
+	border: 1px solid black;
+	background: #aaa;
+}
+
+/*Стили для страницы с шаблонами --- Конец*/
+
+
+/*Стили для страницы отображения адвокатов --- Начало*/
+.lawyer-user-select{
+	padding-top: 30px;
+	min-height: 200px;
+	font-size: 1.2em;
+}
+
+.selector {
+	border-radius: 10px;
+	background: #FFFBBD;
+	border: 1px solid black;
+	padding:0;
+	margin-top: 10px;
+	font-size: 1.5em;
+}
+
+.city-selector{
+	display:none;
+}
+
+.informer{
+	margin-top: 10px;
+}
+
+.lawyer-preview-container{
+	font-size: 0.8em;
+}
+
+img.avatar{
+	width: 100%;
+	height: 100%;
+	min-height: 150px;
+}
+
+img.template-image{
+	width: 100%;
+}
+
+.photo-container .avatar{
+	border-radius: 20px;
+	min-height: 500px;
+	max-width: 550px;
+}
+
+.download-icon{
+	font-size: ;
+}
+
+.lawyer-container{
+	transition: 0.3s;
+	background: #E0FFD8;
+	height: auto;
+	min-height: 350px;
+	border: 1px solid black;
+	border-radius: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 29%;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.lawyer-container:hover{
+	cursor: pointer;
+	background: #ABE0D2;
+}
+
+.avatar-container{
+	height: 170px;
+}
+
+.name-container{
+	margin-top: 20px;
+	text-decoration: underline;
+	text-align: center;
+}
+
+.skype-container, .full-skype-container {
+	margin-top: 20px;
+}
+
+.email-container{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
+
+.email-text, .email-icon{ 
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.info-button{
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+
+.lawyer-full-info{
+	height: auto;
+	min-height: 500px;
+	background: #999;
+	margin-top: 50px;
+	font-size: 1.2em;
+	display: none;
+}
+
+.full-country-container{
+	font-size: 1.5em;
+	border-radius: 10px;
+	text-shadow: 3px 0 0 black;/* Параметры тени */
+	color: white;
+}
+
+.full-city-container{
+	font-size: 1.5em;
+	border-radius: 10px;
+	text-shadow: 3px 0 0 black;/* Параметры тени */
+	color: white;
+}
+
+.full-name-container{
+	font-size: 2.0em;
+	background: #907D8A;
+	border-radius: 10px;
+	text-shadow: 3px 0 0 black;/* Параметры тени */
+	color: white;
+}
+
+.lawyer-contacts{
+	padding-top: 20px;
+	padding-left: 10px;
+}
+
+.lawyer-resume{
+	margin-top: 20px;
+	padding-top: 10px;
+	min-height: 300px;
+	max-height: 800px;
+	background: yellow;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	overflow: auto;
+}
+
+.lawyer-resume pre{
+	overflow: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	max-height: 500px;
+	font-size: 1.0em;
+}
+
+.full-skype-container, .full-email-container, .full-hangout-container{
+	font-size: 1.2em;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 10px;
+}
+
+.full-skype-container{
+	background: #DAF3D5;
+}
+
+.full-email-container{
+	background: #D0EBEA;
+}
+
+.full-hangout-container{
+	background: #F4E037;
+}
+
+/*Стили для страницы отображения адвокатов -- конец*/
+/*Стили для формы регистрации - Начало*/
+.registration-form{
+	background: #DDD;
+	padding-bottom: 30px;
+	height: auto;
+	border-radius: 10px;
+	border: 1px solid black;
+}
+
+.registration{
+	margin-top: 5px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+
+.registration input, .registration button{
+	width: 70%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	font-size: 1.2em;
+}
+
+/*Стили для формы регистрации --- Конец*/
+
+div.fake-div{
+	height: 220px;
+}
+
+/*Стили подвала начало*/
+
+footer{
+	margin-top: 100px;
+	min-height: 50px;
+	background: #999;
+	font-size: 1.2em;
+	text-align: center;
+	transition: 0.3s;
+}
+
+footer:hover a{
+	cursor: pointer;
+	font-size: 1.4em;
+}
+
+footer a{
+	color: #FAFF6F;
+	transition: 0.3s;
+}
+
+.left-side{
+	padding-top: 10px;
+}
