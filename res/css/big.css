@@ -12,6 +12,10 @@ body{
 	background-image: url("../pictures/bg.png");
 }
 
+.fluid-container{
+	margin-top: 50px;
+}
+
 .wrapper{
 	width: 98%;
 	margin: 0 auto;
@@ -69,7 +73,13 @@ input:active{
 	max-height: 250px;
 	border-radius: 10px;
 	border: 1px solid black;
+	transition: 0.3s;
 }
+.logo-container img:hover{
+	border: 1px solid #333333;
+	transform: translate(0px,5px);
+}
+
 
 .header-autorize-container, .header-user-info-container{
 	margin-top: 10px;
@@ -240,16 +250,6 @@ input.autorize-login, input.autorize-password{
 	margin-top: 10px;
 }
 
-.call-lawyer-container *{
-	margin-top: 50px;
-	min-height: 50px; 
-	font-size: 1.3em;
-}
-
-button.show-template{
-	margin-top: 40px;
-}
-
 .template-content{
 	min-height: 300px;
 	border: 1px solid black;
@@ -267,12 +267,9 @@ button.show-template{
 }
 
 .selector {
-	border-radius: 10px;
-	background: #FFFBBD;
-	border: 1px solid black;
 	padding:0;
 	margin-top: 10px;
-	font-size: 1.5em;
+	font-size: 1.4em;
 }
 
 .city-selector{
@@ -461,6 +458,98 @@ img.template-image{
 div.fake-div{
 	height: 220px;
 }
+
+/*Стили админ панели, начало*/
+
+.admin-control-panel-container{
+	height: 100px;
+	background: #880;
+}
+
+.admin-controls-container{
+	border-radius: 10px;
+	border: 1px solid black;
+	background: #FFFCEA;
+}
+
+.admin-location-container{
+	max-height: 800px;
+	background: #DDD;
+	border: 1px solid black;
+	overflow: auto;
+}
+
+.admin-location-container .add-form{
+	border: 1px solid black;
+	border-radius: 10px;
+	display: none;
+}
+
+.admin-location-container .add-form-item
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 1.1em;
+	height: 40px;
+	display: none;
+}
+
+.admin-location-container .add-form-submit{
+	height: 50px;
+}
+
+.admin-location-container .show
+{
+	margin-top: 30px;
+}
+
+.admin-controls{
+	margin-top: 50px;
+	margin-left: 50px;
+}
+
+.admin-location-table-container{
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+
+.table{
+	border: 3px solid black;
+	background: #FFF;
+}
+
+.table thead *{
+	background: #EEE;
+	text-decoration: underline;
+}
+
+.table-bottom-container{
+	border: 0;
+}
+
+.call-lawyer-container *{
+	margin-top: 50px;
+	min-height: 50px; 
+	font-size: 1.3em;
+}
+
+button.show-template{
+	margin-top: 40px;
+}
+
+.admin-preview-container img{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 70%;
+}
+
+.admin-button-container *{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 70%;
+}
+
+/*Стили админ панели, конец*/
 
 /*Стили подвала начало*/
 

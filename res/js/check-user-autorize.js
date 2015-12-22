@@ -15,7 +15,8 @@ function setUserExit()
 			$(".header-autorize-container").show();
 			setTimeout(function(){
 			var warning = ($('.warning-container').hide('fast'));
-			}, 3000);
+			document.location = getURL();
+			}, 1000);
 		}
 	})
 }

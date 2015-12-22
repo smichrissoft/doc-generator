@@ -20,12 +20,14 @@ function formValidator()
 						//Получаем введенное значение
 						var email = $(this).val();
 						/*
-						* Регулярное выражение. Сначала идет сколько угодно (но не менее 3) букв, цифр или тире с подчеркиванием
+						* Регулярное выражение. Сначала идет сколько угодно (но не менее 3) букв, цифр или тире с точкой, подчеркиванием
+						* Первый символ должен быть буквой или цифрой. 
 						* После него обязательно стоит "собака", после которой идет хотя бы 2 буквы домена
 						* После которого стоит точка, а после нее доменное пространство от 2 до 7 латинских букв нижнего регистра
+						* Минимум - ru, максимум museum.
 						* Если условие совпало, утверждаем email как верный.
 						*/
-						var regular = /^[-_a-zA-Z0-9]{3,}[@][a-zA-z]{2,}[.][a-z]{2,7}/;
+						var regular = /^[a-zA-Z0-9][-_.a-zA-Z0-9]{3,}[@][a-zA-z]{2,}[.][a-z]{2,7}/;
 							if (email.match(regular))
 							{
 								valideEmail = true;
@@ -152,6 +154,7 @@ function createNewUser()
 	}
 }
 
+
 function autorizeUser()
 {
 	var login = $('.autorize-login').val();
@@ -180,13 +183,17 @@ function autorizeUser()
 					$('.user-info-username p').html(data.name+' '+data.secondName);
 					$('.user-info-role p').html(data.role);
 					$('.warning-container').removeClass('bg-danger').addClass('bg-success');
-					$('.warning-container').html("You are logged in");
+					$('.warning-container').html("You are logged in as "+data.role);
 					var warning = ($('.warning-container').show('fast'));
 					$('.header-autorize-container').hide('fast');
 					$('.header-user-info-container').show('fast');
 					setTimeout(function(){
 						var warning = ($('.warning-container').hide('fast'));
-					}, 3000);
+						if (data.roleId == 1)
+						{
+							document.location = getURL()+'admin-panel/';
+						}
+					}, 1000);
 				}
 				else
 				{
@@ -209,7 +216,96 @@ function autorizeUser()
 	}
 }
 
+//Напоминание пароля
+function remindPassword(userConfirmed)
+{
+	//Если пользователь ввел ник и нажал на кнопку.
+	if (userConfirmed == 0)
+	{
+		var username = $("input[name=remind-username-field]").val();
+		$.ajax
+		({
+			type:"post",
+			url: getURL()+'res/func/registration/RegistrationPostReceiver.php',
+			data:{remindPasswordSend:true,username:username},
+			response:"text",
+			success:function(data)
+			{
+				$('.warning-container').removeClass('bg-danger').addClass('bg-success');
+				$('.warning-container').html("На указанный вами email отправлено письмо. Письмо могло попасть в спам!");
+				var warning = ($('.warning-container').show('fast'));
+				setTimeout(function(){
+					var warning = ($('.warning-container').hide('fast'));
+					document.location = getURL();
+				}, 3000);
 
+			}
+		});
+	}
+	//Если пользователь уже вводил имя, и перешел на страницу по токену.
+	else
+	{
+		var url = document.location.href;
+		var index = url.indexOf("?");
+		var token = url.substring(index+7, url.indexOf("&"));
+		index = url.indexOf("&");
+		var userId = url.substring(index+8, url.length);
+		var newPassword = $("input[name=remind-input-password]").val();
+		var newRepeatPassword = $("input[name=remind-repeat-password]").val();
+		if (newPassword == newRepeatPassword)
+		{
+			$.ajax
+			({
+				type:"post",
+				url: getURL()+'res/func/registration/RegistrationPostReceiver.php',
+				data:{remindPasswordGet:true,token:token,userId:userId, newPassword:newPassword},
+				response:"text",
+				success:function(data)
+				{
+					if (data == 1)
+					{
+						$('.warning-container').removeClass('bg-danger').addClass('bg-success');
+						$('.warning-container').html("Password successfully changed! You will be redirected automatically...");
+						var warning = ($('.warning-container').show('fast'));
+						setTimeout(function(){
+							var warning = ($('.warning-container').hide('fast'));
+							document.location = getURL();
+						}, 3000);
+					}
+				}
+			});
+		}
+		else
+		{
+			$('.warning-container').removeClass('bg-success').addClass('bg-danger');
+			$('.warning-container').html("Passwords must be match!");
+			var warning = ($('.warning-container').show('fast'));
+			setTimeout(function(){
+				var warning = ($('.warning-container').hide('fast'));
+			}, 3000);
+		}
+	}
+}
+
+function confirmUser()
+{
+	var regular = /[?]/;
+	var url = document.location.href;
+	if (url.match(regular))
+	{
+		$("input[name = remind-username-field]").hide();
+		$("input[name = remind-input-password]").show();
+		$("input[name = remind-repeat-password]").show();
+		return 1;
+	}
+	else
+	{
+		$("input[name = remind-username-field]").show();
+		$("input[name = remind-input-password]").hide();
+		$("input[name = remind-repeat-password]").hide();
+		return 0;
+	}
+}
 
 $(document).ready(function(){
 	$('.submit-button').click(function(){
@@ -219,4 +315,17 @@ $(document).ready(function(){
 	$(".autorize-button").click(function(){
 		autorizeUser();
 	});
+
+	$(".remind-submit-button").click(function(){
+		remindPassword(userConfirmed);
+	});
+
+	$(".autorize-password").keypress(function(eventObject){
+		if(eventObject.which == 13)
+		{
+			$(".autorize-button").click();
+		}
+	});
+
+	var userConfirmed = confirmUser();
 });

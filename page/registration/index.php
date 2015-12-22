@@ -12,7 +12,7 @@
 		<div class="warning-container container text-center">
 			<div class="warning"><p>Alert!</p></div>	
 		</div>
-			<div class="container registration-form">
+		<div class="container registration-form">
 			<div class="row">
 				<div class="registration text-center registration-header-container">
 					<h2>Registration</h2>
@@ -43,6 +43,7 @@
 				</div>
 			</div>
 		</div>
+		<?php getFooter(); ?>
 	</div>
 </body>
 </html>

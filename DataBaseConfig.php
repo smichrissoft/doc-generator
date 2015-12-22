@@ -1,6 +1,6 @@
 <?php
 	$server = "localhost";
-	$username = "root";
-	$password = "MetilToLowMin21";
-	$db = "doc-generator";
+	$username = "u149856785_user";
+	$password = "password";
+	$db = "u149856785_docum";
 ?>

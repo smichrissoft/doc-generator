@@ -56,7 +56,7 @@
 						var hangout = data[i].hangout;
 						lawyerContainer += buildDiv(id, name, secondName, skype, email, hangout, i);
 					}
-					$('.warning-container').removeClass('bg-danger').addClass('bg-success');	
+					$('.warning-container').removeClass('bg-danger').addClass('bg-info');	
 					$('.warning-container').html("Result of your search:");
 					$('.warning-container').show('fast');
 					lawyerDiv.append(lawyerContainer);
@@ -67,7 +67,7 @@
 				else
 				{
 					$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
-					$('.warning-container').html("Have not lawyers in this city!.");
+					$('.warning-container').html("Have no lawyers in this city!.");
 					$('.warning-container').show('fast');
 					setTimeout(function(){
 						$('.warning-container').hide('fast');
@@ -93,10 +93,25 @@
 			success:function(data)
 			{
 				data = JSON.parse(data);
-				$('select.city-selector').append('<option disabled selected value="">SELECT CITY</option>');
-				for (var i = 0; i < data.length; i++)
+				if(data != false)
 				{
-					$('select.city-selector').append('<option data-country-id = "'+data[i].countryId+'" value="'+data[i].cityId+'">'+data[i].city+'</option>');	
+					
+					$('select.city-selector').append('<option disabled selected value="">SELECT CITY</option>');
+					for (var i = 0; i < data.length; i++)
+					{
+						$('select.city-selector').append('<option data-country-id = "'+data[i].countryId+'" value="'+data[i].cityId+'">'+data[i].city+'</option>');	
+					}
+				}
+				else
+				{
+					$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
+					$('.warning-container').html("There is no citi in the chosen country where registered lawyers live...");
+					$('.warning-container').show('fast');
+					setTimeout(function(){
+						$('.warning-container').hide('fast');
+						$('.city-selector').hide();
+						$('.country-selector').val("");
+					},2000);
 				}
 			}
 		});
@@ -114,7 +129,7 @@
 			success:function(data)
 			{
 				data = JSON.parse(data);
-				$('select.country-selector').append('<option disabled selected value="">SELECT COUNTRY</option>');
+				$('select.country-selector').append('<option disabled="disabled" selected="selected" value="">SELECT COUNTRY</option>');
 				for (var i = 0; i < data.length; i++) 
 				{		
 					$('select.country-selector').append('<option value="'+data[i].id+'">'+data[i].country+'</option>');	
@@ -164,6 +179,7 @@ $(document).ready(function(){
 		getAvailableCities(this.value);
 	});
 	$('.city-selector').change(function(){
+		$('.lawyer-full-info').hide('fast');
 		getAvailableLawyers(this.value);
 	});
 });

@@ -1,5 +1,4 @@
 function getURL()
 {
-	var result = "http://local.loc/DocGen/";
-	return result;
+	return "http://smichrissoft.com/ask-a-lawyer/";
 }

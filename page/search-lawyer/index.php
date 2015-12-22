@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center lawyer-user-select">
 					<div class="informer row text-center">
-					<label class = "country-selector">Select country</label>
+					<label class = "country-selector input-lg">Select country</label>
 					<select name="country" class="selector form-control target country-selector"></select>
 					</div>
 					<div class="informer row text-center">
