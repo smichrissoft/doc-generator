@@ -1,5 +1,23 @@
+function deleteOldTokens()
+{
+	$.ajax
+	({
+		type:'post',
+		url: getURL()+"res/func/registration/RegistrationPostReceiver.php",
+		data:{deleteOldTokens:true},
+		response:'text',
+		success:function(data)
+		{
+		}
+	});
+}
+
 function setUserExit()
 {
+	$(".preloader").show("fast");
+
+	deleteOldTokens();
+
 	$.ajax
 	({
 		type: 'post',
@@ -12,6 +30,7 @@ function setUserExit()
 			$('.warning-container').html("You are logged out!");
 			var warning = ($('.warning-container').show('fast'));
 			$(".header-user-info-container").hide();
+			$(".preloader").hide("fast");
 			$(".header-autorize-container").show();
 			setTimeout(function(){
 			var warning = ($('.warning-container').hide('fast'));
@@ -23,6 +42,8 @@ function setUserExit()
 
 function checkUserLogged()
 {
+	deleteOldTokens();
+
 	$.ajax
 	({
 		type: 'post',
@@ -55,6 +76,11 @@ $(document).ready(function(){
 
 	$('.exit-from-login-button').click(function(){
 		setUserExit();
+		$(".preloader").show("fast");
+	});
+
+	$(".warning-container").click(function(){
+		$(this).hide("fast");
 	});
 });
 

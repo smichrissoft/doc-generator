@@ -1,8 +1,11 @@
 <?php 
-//Получаем Head
+
+//Получаем Head, по пути подключая все необходимые функции и библиотеки.
+//REL_URL - константа, в ней находится относительный путь до корневого каталога.
+
 function getHead($title)
 {
-	echo '		
+echo '
 <meta charset="UTF-8">
 <link rel="stylesheet" href="'.REL_URL.'res/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="'.REL_URL.'res/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf">
@@ -16,48 +19,39 @@ function getHead($title)
 <script src="'.REL_URL.'res/js/anchor.js"></script>
 <script src="'.REL_URL.'res/js/registration.js"></script>
 <script src="'.REL_URL.'res/js/check-user-autorize.js"></script>
-<script src="'.REL_URL.'res/js/table-control.js"></script>
 <title>SmiChrisSoft - '.$title.'</title>
 ';
 }
 
 //Получаем шапку сайта
+
 function getHeader()
 {
 	echo '
 <header>
 	<div class="row">
 		<div class="help-and-contact-container col-lg-3">
-			<div class="row">
-				<div class="col-lg-2"></div>
-				<div class="help-container col-lg-8 text-center">
-					<h1>Help</h1>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-2"></div>
-				<div class="contact-container col-lg-8 text-center">
-					<h1>Contacts</h1>
-				</div>
-			</div>
+			<!--Help container-->
 		</div>
-		<div class="logo-container col-lg-5">
+		<div class="logo-container col-lg-4 col-lg-offset-1">
 		';
-		if (isset($_SESSION['userInfo'])) 
+		if (isset($_COOKIE['userInfo'])) 
 		{
-			if ($_SESSION['userInfo']['roleId'] != 1)
-			echo '<a href="'.REL_URL.'">';
-		else
-			echo '<a href="'.REL_URL.'admin-panel/">';
+			$cookie = json_decode($_COOKIE['userInfo'], true);
+
+			if ($cookie['roleId'] != 1)
+				echo '<a href="'.REL_URL.'">';
+			else
+				echo '<a href="'.REL_URL.'admin-panel/">';
 		}
 		else
 		{
 			echo '<a href = "'.REL_URL.'">';
 		}
-		echo '	<img src="https://api.fnkr.net/testimg/500x250/EEE/000/?text=Site+Logo" />
+		echo '<img src="'.REL_URL.'res/pictures/logo.png" />
 			</a>
 		</div>
-		<div class="header-reg-container col-lg-3">
+		<div class="header-reg-container col-lg-3 col-lg-offset-1">
 			<div class="header-autorize-container">
 				<div class="row">
 					<div class="header-login-container text-center">
@@ -93,7 +87,7 @@ function getHeader()
 					</div>
 				</div>
 			</div>	
-			<div class="header-user-info-container">
+			<div class="header-user-info-container col-lg-12">
 				<div class="col-lg-6 label-container login-label text-left">
 					<p>Nickname:</p>
 				</div>
@@ -120,21 +114,25 @@ function getHeader()
 				</div>
 				<div class="submit-container col-lg-12">
 						<button class = "btn btn-success form-control exit-from-login-button"><span class = "glyphicon glyphicon-log-out">&nbsp;Log-out</span></button>
-					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </header>
+<div class="preloader">
+	<img src="'.REL_URL.'res/pictures/preloader.gif" alt="" class="preloader-gif">
+</div>
 ';
 }
 
+//Получаем подвал сайта.
 function getFooter()
 {
 	echo ' 
-		<footer class = "row">
+		<footer class = "row left-side">
 			<a class = "copyright" href="http://smichrissoft.com">
 				<div class="col-lg-12 left-side">
-					SmiChrisSoft©
+					SmiChrisSoft(c)
 				</div>
 			</a>
 		</footer>

@@ -1,3 +1,5 @@
+	
+	//Функция для формирования карточек-визиток адвокатов.
 	function buildDiv(id, name, secondName, skype, email, hangout, i)
 	{
 		var openRowDiv = '<div class="row">';
@@ -12,6 +14,7 @@
 		
 		var prepare = mainContainer + avatarContainer+nameContainer+skypeContainer+emailContainer+hangoutContainer+showInfoButton+closeDiv;
 		
+		//Параметры отображения по трое в ряд.
 		switch (i%3)
 		{
 			case 0: 
@@ -27,17 +30,20 @@
 		
 	}
 
+	//Функция возвращает юристов, живущих в полученном городе.
 	function getAvailableLawyers(cityId)
 	{
+		$(".preloader").show("fast");
 		$('div.lawyer-preview-container div').each(function(){
 			$(this).remove();
 		});
 		var lawyerContainer = '';
+
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'/res/func/lawyers/LawyerPostReciever.php',
-			data:{getLawyers:true, id:cityId},
+			url: getURL()+'/res/func/lawyers/LawyerPostReceiver.php',
+			data:{getLawyersCity:true, id:cityId},
 			response:'text',
 			success:function(data)
 			{
@@ -63,16 +69,15 @@
 					$('.lawyer-container img, .info-button').click(function(){
 						showLawyerInfo(this);
 					});
+					$(".preloader").hide("fast");
 				}	
 				else
 				{
 					$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 					$('.warning-container').html("Have no lawyers in this city!.");
 					$('.warning-container').show('fast');
-					setTimeout(function(){
-						$('.warning-container').hide('fast');
-						$('.city-selector').val("");
-					},2000);
+					$('.city-selector').val("");
+					$(".preloader").hide("fast");
 				}
 			}
 		});
@@ -80,14 +85,16 @@
 
 	//Получаем города, айди страны которых совпадает с выбранной
 	function getAvailableCities(countryId){
+		$(".preloader").show("fast");
 		$('select.city-selector option').each(function(){
 			$(this).remove();
 		});
 		$('select.city-selector').show();
+
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'res/func/lawyers/LawyerPostReciever.php',
+			url: getURL()+'res/func/lawyers/LawyerPostReceiver.php',
 			data:{getCity:true, id:countryId},
 			response:'text',
 			success:function(data)
@@ -101,17 +108,16 @@
 					{
 						$('select.city-selector').append('<option data-country-id = "'+data[i].countryId+'" value="'+data[i].cityId+'">'+data[i].city+'</option>');	
 					}
+					$(".preloader").hide("fast");
 				}
 				else
 				{
 					$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 					$('.warning-container').html("There is no citi in the chosen country where registered lawyers live...");
 					$('.warning-container').show('fast');
-					setTimeout(function(){
-						$('.warning-container').hide('fast');
-						$('.city-selector').hide();
-						$('.country-selector').val("");
-					},2000);
+					$('.city-selector').hide();
+					$('.country-selector').val("");
+					$(".preloader").hide("fast");
 				}
 			}
 		});
@@ -120,10 +126,11 @@
 	//Выбрать все доступные страны.
 	function getCountryOptions()
 	{
+		$(".preloader").show("fast");
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'res/func/lawyers/LawyerPostReciever.php',
+			url: getURL()+'res/func/lawyers/LawyerPostReceiver.php',
 			data:{getCountry:true},
 			response:'text',
 			success:function(data)
@@ -134,6 +141,7 @@
 				{		
 					$('select.country-selector').append('<option value="'+data[i].id+'">'+data[i].country+'</option>');	
 				};
+				$(".preloader").hide("fast");
 			}
 		});
 	}
@@ -142,10 +150,11 @@
 	{
 		var lawyerId =	$(lawyer).parent().parent().attr("id");
 
+		$(".preloader").show("fast");
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'res/func/lawyers/LawyerPostReciever.php',
+			url: getURL()+'res/func/lawyers/LawyerPostReceiver.php',
 			data:{getLawyerInfo:true, id: lawyerId},
 			response:'text',
 			success:function(data)
@@ -164,6 +173,7 @@
 				$('.full-text-resume').html(data.resume);
 				$('.lawyer-full-info').show('fast');
 				$('a[href^="#"]').click();
+				$(".preloader").hide("fast");
 			}
 		});
 	}

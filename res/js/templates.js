@@ -9,7 +9,7 @@ function showTemplateInfo(data)
 	$('.template-info-container .template-info-data-container p span').html("DD.MM.YYYY");
 	$('.template-info-container .main-content-container pre h1').html(title);
 	$('.template-info-container .main-content-container pre div').html(text);
-	$('.download-button').attr('href','templates/'+name+'/text.html');
+	$('.download-button').attr('href',getURL()+'store/doc-templates/'+name+'/text.html');
 	$('.template-id').val(data.id);
 	$('.template-info-container').show('fast');
 	$('a[href^="#"]').click();
@@ -18,6 +18,7 @@ function showTemplateInfo(data)
 //Получаем информацию о выбранном документе с помощью запроса
 function getTemplateInfo(templateId)
 {
+	$(".preloader").show("fast");
 	$.ajax
 	({
 		type: 'post',
@@ -26,10 +27,12 @@ function getTemplateInfo(templateId)
 		response:'text',
 		success:function(data)
 		{
+			
 			data = JSON.parse(data);
 			showTemplateInfo(data);
 		}
 	});
+	$(".preloader").hide("fast");
 }
 
 //Обработчик кнопки Previous

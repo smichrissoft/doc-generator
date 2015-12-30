@@ -2,21 +2,22 @@ function deleteCity(id)
 {
 	if (confirm("You really want delete this city? IT'S IRREVERSIBLE!"))
 	{
+		$(".preloader").show("fast");
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+			url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 			data:{deleteCity:true,cityId:id},
 			response:'text',
 			success:function(data)
 			{
-				if (data)
+				if (data != 0)
 				{
 					$('.warning-container').removeClass('bg-danger').addClass('bg-success');	
 					$('.warning-container').html("City "+data+" deleted.");
 					$('.warning-container').show('fast');
+					$(".preloader").hide("fast");
 					setTimeout(function(){
-						$('.warning-container').hide('fast');
 						//Жамкаем по кнопке и обновляем таблицу
 						$(".fill-table-cities-button").click();
 					},2000);
@@ -24,10 +25,10 @@ function deleteCity(id)
 				else
 				{
 					$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
-					$('.warning-container').html("Something went wrong. We fix it...");
+					$('.warning-container').html("You have some lawyers in this city! Delete process cancelled.");
 					$('.warning-container').show('fast');
+					$(".preloader").hide("fast");
 					setTimeout(function(){
-						$('.warning-container').hide('fast');
 						//Жамкаем по кнопке и обновляем таблицу
 						$(".fill-table-cities-button").click();
 					},2000);
@@ -47,21 +48,22 @@ function deleteCountry(id)
 {
 	if (confirm("You really want delete this country? IT'S IRREVERSIBLE!"))
 	{
+		$(".preloader").show("fast");
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+			url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 			data:{deleteCountry:true,countryId:id},
 			response:'text',
 			success:function(data)
 			{
-				if (data)
+				if (data != 0)
 				{
 					$('.warning-container').removeClass('bg-danger').addClass('bg-success');	
 					$('.warning-container').html("Country "+data+" deleted.");
 					$('.warning-container').show('fast');
+					$(".preloader").show("hide");
 					setTimeout(function(){
-						$('.warning-container').hide('fast');
 						//Жамкаем по кнопке и обновляем таблицу
 						$(".fill-table-countries-button").click();
 					},2000);
@@ -69,10 +71,10 @@ function deleteCountry(id)
 				else
 				{
 					$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
-					$('.warning-container').html("Something went wrong. We fix it...");
+					$('.warning-container').html("You have some cities in this country! Delete process cancelled");
 					$('.warning-container').show('fast');
+					$(".preloader").hide("fast");
 					setTimeout(function(){
-						$('.warning-container').hide('fast');
 						//Жамкаем по кнопке и обновляем таблицу
 						$(".fill-table-countries-button").click();
 					},2000);
@@ -104,35 +106,36 @@ function addNewCity()
 			//И если пользователь явно подтвердил добавление
 			if (confirm("You really want add this city: "+city+"?"))
 			{
+				$(".preloader").show("fast");
 				//Выполняем запрос на добавление
 				$.ajax
 				({
 					type:'post',
-					url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+					url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 					data:{addNewCity:true,countryId:countryId,city:city},
 					response:'text',
 					success:function(data)
 					{
 						//Если ответ пришел не пустой, сообщаем об успехе
-						if (data)
+						if (data == true)
 						{
 							$('.warning-container').removeClass('bg-danger').addClass('bg-success');	
 							$('.warning-container').html("City "+data+" succesfully added!");
 							$('.warning-container').show('fast');
+							$(".preloader").hide("fast");
 							setTimeout(function(){
-								$('.warning-container').hide('fast');
 								//Жамкаем по кнопке и обновляем таблицу
 								$(".fill-table-cities-button").click();
 							},2000);
 						}
-						//Если запрос пустой, предупреждаем
+						//Если запрос пустой или с ошибкой, предупреждаем.
 						else
 						{
 							$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 							$('.warning-container').html("Something went wrong. We fix it...");
 							$('.warning-container').show('fast');
+							$(".preloader").hide("fast");
 							setTimeout(function(){
-								$('.warning-container').hide('fast');
 								//Жамкаем по кнопке и обновляем таблицу
 								$(".fill-table-cities-button").click();
 							},2000);
@@ -152,8 +155,8 @@ function addNewCity()
 			$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 			$('.warning-container').html("Invalid name of city!");
 			$('.warning-container').show('fast');
+			$(".preloader").hide("fast");
 			setTimeout(function(){
-				$('.warning-container').hide('fast');
 				//Жамкаем по кнопке и обновляем таблицу
 				$(".fill-table-cities-button").click();
 			},2000);
@@ -165,16 +168,14 @@ function addNewCity()
 		$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 		$('.warning-container').html("Please, select a country!");
 		$('.warning-container').show('fast');
-		setTimeout(function(){
-			$('.warning-container').hide('fast');
-		},2000);
+		$(".preloader").hide("fast");
 	}
 }
 
 //Функция на добавление страны
 function addNewCountry()
 {
-	var country = $('input.input-country-name').val();
+	var country = $('.country-city-add-form input.input-country-name').val();
 	var regular = /[-+=,._0-9]/;
 
 	//Если совпадает по регулярке и не равно пустоте
@@ -183,11 +184,12 @@ function addNewCountry()
 		//И если юзверь подтвердил добавление
 		if (confirm("You really want add this country: "+country+"?"))
 		{
+			$(".preloader").show("fast");
 			//Создаем запрос на добавление страны
 			$.ajax
 			({
 				type:'post',
-				url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+				url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 				data:{addNewCountry:true,country:country},
 				response:'text',
 				success:function(data)
@@ -198,10 +200,11 @@ function addNewCountry()
 						$('.warning-container').removeClass('bg-danger').addClass('bg-success');	
 						$('.warning-container').html("Country "+data+" succesfully added!");
 						$('.warning-container').show('fast');
+						$(".preloader").hide("fast");
 						setTimeout(function(){
-							$('.warning-container').hide('fast');
 							//Жамкаем по кнопке и обновляем таблицу
 							$(".fill-table-countries-button").click();
+							var warning = ($('.warning-container').hide('fast'));
 						},1000);
 					}
 					//Если запрос пустой, предупреждаем
@@ -210,8 +213,8 @@ function addNewCountry()
 						$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 						$('.warning-container').html("Something went wrong. We fix it...");
 						$('.warning-container').show('fast');
+						$(".preloader").hide("fast");
 						setTimeout(function(){
-							$('.warning-container').hide('fast');
 							//Жамкаем по кнопке и обновляем таблицу
 							$(".fill-table-countries-button").click();
 						},1000);
@@ -231,9 +234,7 @@ function addNewCountry()
 		$('.warning-container').removeClass('bg-success').addClass('bg-danger');	
 		$('.warning-container').html("Invalid country name!");
 		$('.warning-container').show('fast');
-		setTimeout(function(){
-			$('.warning-container').hide('fast');
-		},1000);
+		$(".preloader").hide("fast");
 	}
 	
 }
@@ -242,19 +243,20 @@ function addNewCountry()
 function prepareForAdd(addCountry)
 {
 	//Показываем саму форму
-	$('.add-form-submit').show();
+	$('.country-city-add-form').show();
 
 	//Если перед этим были выбраны страны 
 	if (addCountry)
 	{
-		$('.input-country-name')	.show();
+		$('.country-city-add-form .input-country-name')	.show();
 		$('.country-selector')		.hide();
 		$('.input-city-name')		.hide();
+		$('.country-city-add-form .add-form-submit')		.show();
 	}
 	//Если были выбраны города
 	else
-	{
-		$('.input-country-name')	.hide();
+	{ 
+		$('.country-city-add-form .input-country-name')	.hide();
 		$('.country-selector')		.show();
 		$('.input-city-name')		.show();
 
@@ -262,15 +264,17 @@ function prepareForAdd(addCountry)
 		$('.country-selector option').each(function(){
 			$(this).remove();
 		});
+		$(".preloader").show("fast");
 		//Выполняем запрос на получение всех стран
 		$.ajax
 		({
 			type:'post',
-			url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+			url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 			data:{fillTableCountries:true},
 			response:'text',
 			success:function(data)
 			{
+				$(".preloader").hide("fast");
 				data = JSON.parse(data);
 				//Добавляем дефолтный элемент
 				$('.country-selector').append('<option disabled="disabled" selected="selected" value="">What country is this city?</option>');
@@ -285,53 +289,56 @@ function prepareForAdd(addCountry)
 }
 
 //Функция для заполнения таблиц
-function fillTable(option, data)
+function fillCountryCityTable(data)
 {
 	//Сначала чистим
-	$('.table')			.hide('fast');
-	$('.add-form')		.hide('fast');
-	$('.add-button')	.html('Add');
-	$('.table thead')	.html("");
-	$('.table tbody')	.html("");
+	var warning = ($('.warning-container').hide('fast'));
+	$('.location-table')			.hide();
+	$('.country-city-add-form')		.hide();
+	$('.country-city-add-button')	.html('Add');
+	$('.location-table thead')		.html("");
+	$('.location-table tbody')		.html("");
 
 	//Если заполняем страны
-	if (option == "countries")
+	if ($('.location-table').hasClass("countries"))
 	{
 		//Добавляем дефолтную структуру
-		var struct = "<tr><td>Id</td><td>Country</td><td>Use</td></tr>";
-		$('.table thead').append(struct);
+		var struct = "<tr><td>Id</td><td>Country</td><td>Lawyers</td><td>Use</td></tr>";
+		$('.location-table thead').append(struct);
 		//Сканим количество прилетевших записей
 		for (var i = 0; i < data.length; i++)
 		{
 			//Задаем элементы на добавление
-			var openRow = '<tr id = "'+data[i].id+'" class = "table-row">';
+			var openRow = '<tr id = "'+data[i].id+'" class = "country-city-table-row">';
 			var closeRow = '</tr>';
-			var tdId = '<td class = "table-db-id">'+data[i].id+'</td>';
-			var tdCountry = '<td class = "table-country-name">'+data[i].country+'</td>';
-			var tdUse	= '<td class="table-use"><button class="btn btn-danger delete-country-button">Delete</button></td>';
+			var tdId = '<td class = "country-city-table-db-id">'+data[i].id+'</td>';
+			var tdCount = '<td class = "country-city-table-db-id">'+data[i].lawyersCount+'</td>';
+			var tdCountry = '<td class = "country-city-table-country-name">'+data[i].country+'</td>';
+			var tdUse	= '<td class="country-city-table-use"><button class="btn btn-danger delete-country-button form-control"><span class="glyphicon glyphicon-remove">&nbsp;</span>Delete</button></td>';
 			//Добавляем элементы в нужном порядке
-			$('.table tbody').append(openRow+tdId+tdCountry+tdUse+closeRow);
+			$('.location-table tbody').append(openRow+tdId+tdCountry+tdCount+tdUse+closeRow);		
 		}
 		
 	}
 	//Если заполняем таблицу городами
-	if (option == "cities")
+	if ($('.location-table').hasClass("cities"))
 	{
 		//Определяем дефолтную структуру и добавляем ее
-		var struct = "<tr><td>Id</td><td>City</td><td>Country</td><td>Use</td></tr>";
-		$('.table thead').append(struct);
+		var struct = "<tr><td>Id</td><td>City</td><td>Lawyers</td><td>Country</td><td>Use</td></tr>";
+		$('.location-table thead').append(struct);
 		//Сканим количество прилетевших записей
 		for (var i = 0; i<data.length; i++)
 		{
 			//Задаем отдельные элементы
-			var openRow = '<tr id = "'+data[i].id+'" class = "table-row">';
+			var openRow = '<tr id = "'+data[i].id+'" class = "country-city-table-row">';
 			var closeRow = '</tr>';
-			var tdId = '<td class = "table-db-id">'+data[i].id+'</td>';
-			var tdCity = '<td class = "table-db-id">'+data[i].city+'</td>';
-			var tdCountry = '<td class = "table-country-name">'+data[i].country+'</td>';
-			var tdUse	= '<td class="table-use"><button class="btn btn-danger delete-city-button">Delete</button></td>';
+			var tdId = '<td class = "country-city-table-db-id">'+data[i].id+'</td>';
+			var tdCount = '<td class = "country-city-table-db-id">'+data[i].lawyersCount+'</td>';
+			var tdCity = '<td class = "country-city-table-db-id">'+data[i].city+'</td>';
+			var tdCountry = '<td class = "country-city-table-country-name">'+data[i].country+'</td>';
+			var tdUse	= '<td class="country-city-table-use"><button class="btn btn-danger delete-city-button form-control"><span class="glyphicon glyphicon-remove">&nbsp;</span>Delete</button></td>';
 			//Добавляем элементы в требуемом порядке.
-			$('.table tbody').append(openRow+tdId+tdCity+tdCountry+tdUse+closeRow);
+			$('.location-table tbody').append(openRow+tdId+tdCity+tdCount+tdCountry+tdUse+closeRow);
 		}
 	}
 
@@ -346,37 +353,43 @@ function fillTable(option, data)
 		deleteCity(id);
 	});
 	//Показываем таблицу в любом случае
-	$('.table').show('fast');
+	$('.location-table').show('fast');
 }
 
 function getTableCountries()
 {
+	$(".preloader").show("fast");
 	$.ajax
 	({
 		type:'post',
-		url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+		url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 		data:{fillTableCountries:true},
 		response:'text',
 		success:function(data)
 		{
+			$(".preloader").hide("fast");
 			data = JSON.parse(data);
-			fillTable("countries", data);
+			$('.location-table').removeClass("cities").addClass("countries")
+			fillCountryCityTable(data);
 		}
 	});
 }
 
 function getTableCities()
 {
+	$(".preloader").show("fast");
 	$.ajax
 	({
 		type:'post',
-		url: getURL()+'/res/func/database/FillAdminTableReceiver.php',
+		url: getURL()+'/res/func/admin-panel/FillAdminTableCountryCityReceiver.php',
 		data:{fillTableCities:true},
 		response:'text',
 		success:function(data)
 		{
+			$(".preloader").hide("fast");
 			data = JSON.parse(data);
-			fillTable("cities", data);
+			$('.location-table').removeClass("countries").addClass("cities");
+			fillCountryCityTable(data);
 
 		}
 	});
@@ -399,23 +412,23 @@ $(document).ready(function(){
 		addCountry = false;
 	});
 
-	$(".add-button").click(function(){
+	$(".country-city-add-button").click(function(){
 		if (addFormHide)
 		{
-			$('.add-form').show('fast');
+			$('.country-city-add-form').show('fast');
 			$(this).html('Cancel');;
 			addFormHide = false;
 			prepareForAdd(addCountry);
 		}
 		else
 		{
-			$('.add-form').hide('fast');
+			$('.country-city-add-form').hide('fast');
 			$(this).html('Add');
 			addFormHide = true;
 		}
 	});
 
-	$('.add-form-submit').click(function(){
+	$('.country-city-add-form .add-form-submit').click(function(){
 		if (addCountry)
 		{
 			addNewCountry();
@@ -427,5 +440,4 @@ $(document).ready(function(){
 	});
 
 	getTableCountries();
-
 });

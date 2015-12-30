@@ -5,8 +5,10 @@
 
 $builder = new Builder;
 $builder->setConnect($server, $username, $password, $db);
+//В этой переменной хранится массив со всеми шаблонами.
 $allTemplates = $builder->getTemplates();
 
+//Формирует выбранный массив
 function getAvailableTemplate($id, $allTemplates)
 {
 	for ($i=0; $i < count($allTemplates); $i++) 

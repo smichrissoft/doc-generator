@@ -17,7 +17,6 @@ class DataBaseController{
 		$this->username = $username;
 		$this->password = $password;
 		$this->db = $db;
-		if ($this->server) return "All ok";
 	}
 
 //Создаем соединение.  
@@ -30,7 +29,7 @@ class DataBaseController{
   			$this->connect = $connect;
 	}
 
-	//Отладочная функция, удалить после релиза.
+	//Отладочная функция, можно удалить после релиза.
 
 	function getStatus(){
 		return $this->connect;
@@ -64,8 +63,15 @@ class DataBaseController{
 		}
 		return ($res);
 	}
-//Общая функция, последовательно выполняющая setQuery, execQuery, и getArrayResult. 
-//Для удобства вызова.
+
+
+
+	
+/*	Общая функция, последовательно выполняющая setQuery, execQuery, и getArrayResult. 
+*	Для удобства вызова. Работает только на SELECT, для остальных запросов понадобится
+*	ручной вызов. Это связано с тем, что getArrayResult возвращает массив данных, в то
+*	время как execQuery может вернуть true или ошибку, которые в массив не положишь.
+*/
 	function getQuery($query)
 	{
 		$this->setQuery($query);

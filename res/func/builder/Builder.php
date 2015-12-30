@@ -11,7 +11,7 @@ class Builder
 		$database->connect();
 		$this->connect = $database;
 	}
-	//Получат информацию о всех шаблонах из базы данных, и отдает получившийся массив.
+	//Получаeт информацию о всех шаблонах из базы данных, и отдает получившийся массив.
 	function getTemplates()
 	{
 		$result = $this->connect->getQuery("SELECT * FROM templates");

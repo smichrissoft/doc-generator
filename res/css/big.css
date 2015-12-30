@@ -9,7 +9,7 @@
 }
 
 body{
-	background-image: url("../pictures/bg.png");
+	background-image: url("../pictures/body-bg/bg-4.jpg");
 }
 
 .fluid-container{
@@ -17,8 +17,9 @@ body{
 }
 
 .wrapper{
-	width: 98%;
+	width: 100%;
 	margin: 0 auto;
+	overflow-x: hidden;
 }
 
 a.text-link{
@@ -35,6 +36,8 @@ a.text-link:hover{
 
 header{
 	height: auto;
+	background-image: url("../pictures/header-bg/bg-1.jpg");
+	padding: 80px;
 }
 
 select:hover, input:hover{
@@ -71,21 +74,16 @@ input:active{
 	width: 100%;
 	height: auto;
 	max-height: 250px;
-	border-radius: 10px;
-	border: 1px solid black;
 	transition: 0.3s;
 }
 .logo-container img:hover{
-	border: 1px solid #333333;
 	transform: translate(0px,5px);
 }
 
 
 .header-autorize-container, .header-user-info-container{
 	margin-top: 10px;
-	margin-left: 3%;
 	height: auto;
-	max-height: 230px;
 	border-radius: 10px;
 	border: 1px solid black;
 	padding-bottom: 10px;
@@ -105,9 +103,9 @@ input:active{
 .header-user-info-container{
 	border: 1px solid black;
 	padding-right: 5px;
-	min-height: 230px;
 	text-transform: capitalize;
 	display: none;
+	position: relative;
 }
 
 .header-login-container{
@@ -120,6 +118,7 @@ input:active{
 
 .login-label *{
 	padding-top: 10px;
+
 }
 
 .login-input *{
@@ -128,10 +127,12 @@ input:active{
 
 .password-label *{
 	padding-top: 10px;
+
 }
 
 .password-input *{
 	margin-top: 5px;
+
 }
 
 .input-container{
@@ -158,6 +159,14 @@ input.autorize-login, input.autorize-password{
 	font-size: 1.0em;
 }
 
+.preloader{
+	position: fixed;
+	left: 45%;
+	top: 40%;
+	z-index: 9;
+	display: none;
+}
+
 /*Стили для шапки сайта --- конец*/
 
 .container{
@@ -166,11 +175,17 @@ input.autorize-login, input.autorize-password{
 
 .warning-container{
 	margin-top: 20px;
-	padding-top: 20px;
-	font-size: 1.1em;
+	padding-top: 25px;
+	font-size: 1.3em;
 	border-radius: 10px;
+	position: fixed;
 	height: 70px;
+	left: 20%;
+	top: 35%;
+	border: 1px solid black;
 	display: none;
+	z-index: 10;
+	cursor: pointer;
 }
 
 /*Стили для страницы с просмотром шаблонов---Начало*/
@@ -466,17 +481,27 @@ div.fake-div{
 	background: #880;
 }
 
+.admin-placeholder-preview-container *{
+	float: right;
+}
+
 .admin-controls-container{
 	border-radius: 10px;
 	border: 1px solid black;
-	background: #FFFCEA;
+	margin-left: 3%;
+	background-image: url("../pictures/panel-bg.jpg");
+}
+
+.admin-controls-container .select-right-table-preview{
+	color: #FBFF9E;
+	text-shadow: 1px 1px 2px black; 
 }
 
 .admin-location-container{
-	max-height: 800px;
-	background: #DDD;
+	background-image: url("../pictures/panel-bg.jpg");
 	border: 1px solid black;
-	overflow: auto;
+	border-radius: 10px;
+	margin-left: 3%;
 }
 
 .admin-location-container .add-form{
@@ -485,6 +510,69 @@ div.fake-div{
 	display: none;
 }
 
+.admin-lawyer-info-container{
+	border: 5px double black;
+	padding-top: 20px;
+	max-height: 700px;
+	border-radius: 10px;
+	background: #EEE;
+	font-size: 0.9em;
+	overflow:auto;
+	display: none;
+	position: fixed;
+	left: 30%;
+	top: 15%;
+	z-index: 1;
+	-webkit-box-shadow: 10px 10px 118px 70px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 118px 70px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 118px 70px rgba(0,0,0,0.75);
+}
+
+.admin-lawyer-info-avatar{
+	max-width: 50%;
+	max-height: 400px;
+	color: #FF6D53;
+	transition: 0.5s;
+}
+
+.admin-lawyer-info-avatar{
+	max-height: 300px;
+	cursor:pointer;
+}
+
+.admin-lawyer-info-avatar img{
+	width: 100%;
+	max-height: 300px;
+}
+
+.admin-lawyer-info-person{
+	font-size: 1.5em;
+}
+
+.admin-lawyer-info-person *{
+	margin-top: 10px;
+}
+
+.admin-lawyer-info-name{
+	margin-top: 10%;
+	font-size: 1.7em;
+}
+
+.add-lawyer-user-selector{
+	text-transform: capitalize;
+}
+
+.lawyer-add-form .add-form-item{
+	margin-top: 10px;
+	font-size: 1.1em;
+}
+
+.admin-lawyer-info-resume pre{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	max-height: 200px;
+	font-size: 1.0em;
+}
 .admin-location-container .add-form-item
 {
 	margin-top: 5px;
@@ -508,19 +596,68 @@ div.fake-div{
 	margin-left: 50px;
 }
 
+.admin-lawyer-table-container{
+
+}
+
+.admin-templates-control{
+	display: none;
+}
+
+.admin-users-control{
+	display: none;
+}
+
 .admin-location-table-container{
 	margin-top: 50px;
 	margin-bottom: 30px;
 }
 
-.table{
-	border: 3px solid black;
-	background: #FFF;
+.lawyers-table{
+	margin-top: 30px;
 }
 
-.table thead *{
-	background: #EEE;
+.lawyer-add-form{
+	display:none;
+}
+
+.add-form-submit{
+	display: none;
+}
+
+.lawyer-city-selector{
+	display: none;
+	margin-top: 10px;
+}
+
+.location-table{
+	border: 3px solid black;
+	background: #FFF;
+	overflow:auto;
+}
+
+.table thead tr td{
+	background: #76CFFF;
+	border: 1px solid #EEE;
 	text-decoration: underline;
+	height: 100px;
+	padding-top: 30px;
+	font-size: 1.3em;
+}
+
+.table{
+	max-height: 400px;
+	overflow:auto;
+}
+
+.table tbody tr:hover td{
+	cursor: pointer;
+	background: #E8F0FF;
+}
+
+.table td
+{
+	background: #EAFEFF;
 }
 
 .table-bottom-container{
@@ -549,14 +686,34 @@ button.show-template{
 	width: 70%;
 }
 
+.change-lawyer-info-container{
+	width: 30%;
+	background: #EEE;
+	position: fixed;
+	left: 35%;
+	top: 25%;
+	z-index: 2;
+	padding: 15px;
+	display: none;
+	border-radius: 30px;
+	border: 3px double black;
+	-webkit-box-shadow: 10px 10px 42px 40px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 42px 40px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 42px 40px rgba(0,0,0,0.75);
+}
+
+.change-lawyer-info-container *{
+	margin-top: 5px;
+}
+
 /*Стили админ панели, конец*/
 
 /*Стили подвала начало*/
 
 footer{
 	margin-top: 100px;
-	min-height: 50px;
-	background: #999;
+	min-height: 70px;
+	background: #A19FAE;
 	font-size: 1.2em;
 	text-align: center;
 	transition: 0.3s;

@@ -62,7 +62,8 @@ function formValidator()
 				}
 			});
 	});
-	if (valide != 6)										//Если хоть одно поле было неверно заполнено
+	//Если хоть одно поле было неверно заполнено
+	if (valide != 6)										
 	{
 
 		if (valideEmail==true)
@@ -91,6 +92,7 @@ function formValidator()
 //Функция для добавления юзера
 function createNewUser()
 {
+	$(".preloader").show("fast");
 	var login = $('input[name = login-field]').val();
 	var firstPassword = $('input[name = input-password]').val();
 	var repeatPassword = $('input[name = repeat-password]').val();
@@ -118,6 +120,7 @@ function createNewUser()
 				response:'text',
 				success:function(data)
 				{
+					$(".preloader").hide("fast");
 					if (data == 1)
 					{
 						$('.warning-container').removeClass('bg-danger').addClass('bg-success');
@@ -145,23 +148,28 @@ function createNewUser()
 					}
 				}
 			});
-	
 		}
 	}
 	else
 	{
-		alert("Passwords must be match!");
+		$('.warning-container').removeClass('bg-success').addClass('bg-danger');
+		$('.warning-container').html("Password must be match!");
+		var warning = ($('.warning-container').show('fast'));
 	}
+		$(".preloader").hide("fast");
+
 }
 
 
 function autorizeUser()
 {
+	$(".preloader").show("fast");
 	var login = $('.autorize-login').val();
 	var password = $('.autorize-password').val();
 	if (login.length != 0 && password.length != 0)
 	{
 		var warning = ($('.warning-container').hide('fast'));
+
 		$.ajax
 		({
 			type:'post',
@@ -201,9 +209,6 @@ function autorizeUser()
 					$('.warning-container').html("Invalid login or password");
 					var warning = ($('.warning-container').show('fast'));
 					$('.autorize-password').val('');
-					setTimeout(function(){
-						var warning = ($('.warning-container').hide('fast'));
-					}, 3000);
 				}
 			}
 		});
@@ -214,15 +219,18 @@ function autorizeUser()
 		$('.warning-container').html("Fields must be filled!");
 		var warning = ($('.warning-container').show('fast'));
 	}
+	$(".preloader").hide("fast");
 }
 
 //Напоминание пароля
 function remindPassword(userConfirmed)
 {
+	$(".preloader").show("fast");
 	//Если пользователь ввел ник и нажал на кнопку.
 	if (userConfirmed == 0)
 	{
 		var username = $("input[name=remind-username-field]").val();
+
 		$.ajax
 		({
 			type:"post",
@@ -231,11 +239,11 @@ function remindPassword(userConfirmed)
 			response:"text",
 			success:function(data)
 			{
+				$(".preloader").hide("fast");
 				$('.warning-container').removeClass('bg-danger').addClass('bg-success');
-				$('.warning-container').html("На указанный вами email отправлено письмо. Письмо могло попасть в спам!");
+				$('.warning-container').html("Remind password procedure has been send to your email.");
 				var warning = ($('.warning-container').show('fast'));
 				setTimeout(function(){
-					var warning = ($('.warning-container').hide('fast'));
 					document.location = getURL();
 				}, 3000);
 
@@ -245,20 +253,21 @@ function remindPassword(userConfirmed)
 	//Если пользователь уже вводил имя, и перешел на страницу по токену.
 	else
 	{
+	 	$(".preloader").show("fast");
 		var url = document.location.href;
 		var index = url.indexOf("?");
-		var token = url.substring(index+7, url.indexOf("&"));
-		index = url.indexOf("&");
-		var userId = url.substring(index+8, url.length);
+		var token = url.substring(index+7, url.length);
+		
 		var newPassword = $("input[name=remind-input-password]").val();
 		var newRepeatPassword = $("input[name=remind-repeat-password]").val();
 		if (newPassword == newRepeatPassword)
 		{
+
 			$.ajax
 			({
 				type:"post",
-				url: getURL()+'res/func/registration/RegistrationPostReceiver.php',
-				data:{remindPasswordGet:true,token:token,userId:userId, newPassword:newPassword},
+				url: getURL()+"res/func/registration/RegistrationPostReceiver.php",
+				data:{remindPasswordGet:true,token:token,newPassword:newPassword},
 				response:"text",
 				success:function(data)
 				{
@@ -272,6 +281,12 @@ function remindPassword(userConfirmed)
 							document.location = getURL();
 						}, 3000);
 					}
+					else
+					{
+						$('.warning-container').removeClass('bg-success').addClass('bg-danger');
+						$('.warning-container').html(" Your timebased activation key has expired! Try send a password restore request again");
+						var warning = ($('.warning-container').show('fast'));	
+					}
 				}
 			});
 		}
@@ -280,11 +295,9 @@ function remindPassword(userConfirmed)
 			$('.warning-container').removeClass('bg-success').addClass('bg-danger');
 			$('.warning-container').html("Passwords must be match!");
 			var warning = ($('.warning-container').show('fast'));
-			setTimeout(function(){
-				var warning = ($('.warning-container').hide('fast'));
-			}, 3000);
 		}
 	}
+	$(".preloader").hide("fast");
 }
 
 function confirmUser()
